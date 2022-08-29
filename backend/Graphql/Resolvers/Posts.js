@@ -6,7 +6,7 @@ module.exports = {
     Query: {
         async getPosts(_, {}, context){
             try{
-                const user = checkAuth(context);
+                //const user = checkAuth(context);
                 const posts = await Post.find({}).sort({ createdAt: -1 });
                 return posts
             }catch(err){
