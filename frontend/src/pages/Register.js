@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import { Form, Button } from "semantic-ui-react"
-import { useMutation } from "@apollo/react-hooks"
-import gql from "graphql-tag"
+import { useMutation, gql } from "@apollo/client";
 
 function Register(){
     const [ errors, setErrors ] = useState({})
@@ -11,12 +10,14 @@ function Register(){
         password: "",
         confirmPassword: ""
     })
-    const [ addUser, { data, loading }] = useMutation(REGISTER_USER, {
+    const [ addUser, { loading }] = useMutation(REGISTER_USER, {
+        update(_, data){
+            console.log(data)
+        },
         onError(err) {
             setErrors(err.graphQLErrors[0].extensions.errors)
         }
     })
-    console.log(`######`,data)
     const onSubmit = (e) => {
         e.preventDefault()
         addUser({ variables: value })
